@@ -4,6 +4,7 @@ import java.util.Arrays;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 public class ruFixPlayerListener implements Listener{
@@ -12,7 +13,7 @@ public class ruFixPlayerListener implements Listener{
         plugin = instance;
     }
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event){
 		if (event.isCancelled()) return;
 //		String fix = fixFromGame(event.getMessage());
@@ -26,7 +27,7 @@ public class ruFixPlayerListener implements Listener{
 		}
 } 
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(PlayerChatEvent event){
 		if (ruFix.ruFixDebug)
         	System.out.print("[ruFixDebug]:" + event.getMessage() + ":");
