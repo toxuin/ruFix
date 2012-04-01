@@ -84,16 +84,16 @@ public class ruFix extends JavaPlugin {
 	        return readCommand(sender, commandLabel, args);
 	    }
 
-	    public boolean readCommand(CommandSender sender, String command, String[] args) {
-	        if((command.equalsIgnoreCase("rufixreload")) && (sender instanceof ConsoleCommandSender)) {
-	        	this.reloadConfig();
-	        	readConfig();
-	        	readTables();
-	        	if (ruFixDebug) sender.sendMessage("ParseConsole is now " + parseConsole );
-	        	return true;
-	        }
-	        return false;
-	    }
+    public boolean readCommand(CommandSender sender, String command, String[] args) {
+        if((command.equalsIgnoreCase("rufixreload")) && (sender instanceof ConsoleCommandSender)) {
+        	this.reloadConfig();
+        	readConfig();
+        	readTables();
+        	if (ruFixDebug) sender.sendMessage("ParseConsole is now " + parseConsole );
+        	return true;
+        }
+        return false;
+    }
 	
     public void saveConfig() {
 	     if (config == null || configFile == null) {

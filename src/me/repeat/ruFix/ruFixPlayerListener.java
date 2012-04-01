@@ -13,7 +13,7 @@ public class ruFixPlayerListener implements Listener{
         plugin = instance;
     }
 	
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event){
 		if (event.isCancelled()) return;
 //		String fix = fixFromGame(event.getMessage());
@@ -27,7 +27,7 @@ public class ruFixPlayerListener implements Listener{
 		}
 } 
 	
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerChat(PlayerChatEvent event){
 		if (ruFix.ruFixDebug)
         	System.out.print("[ruFixDebug]:" + event.getMessage() + ":");
