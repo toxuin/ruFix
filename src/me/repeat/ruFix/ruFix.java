@@ -3,6 +3,7 @@ package me.repeat.ruFix;
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.*;
 
@@ -241,5 +242,20 @@ public class ruFix extends JavaPlugin {
 				}
     	    }
      	}
+	}
+	
+	public static String fixUseTable(String msg){
+		for (int n = 0; n < msg.length(); n++) {
+			char t = msg.charAt(n);
+//System.out.println("char: " + t);
+//System.out.println("int: " + (int)t);
+			int idx = Arrays.binarySearch(ruFix.fromGame, t);
+//System.out.println("idx: " + idx);
+			if (idx > -1){
+				msg = msg.replace(t, ruFix.toGame[idx]);
+//System.out.println("charf: " + ruFix.toGame[idx]);
+			}
+		}
+		return msg;
 	}
 }

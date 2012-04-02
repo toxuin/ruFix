@@ -1,6 +1,5 @@
 package me.repeat.ruFix;
 
-import java.util.Arrays;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.EventHandler;
@@ -17,7 +16,7 @@ public class ruFixPlayerListener implements Listener{
 	public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event){
 		if (event.isCancelled()) return;
 //		String fix = fixFromGame(event.getMessage());
-		String fix = fixUseTable(event.getMessage());
+		String fix = ruFix.fixUseTable(event.getMessage());
 		if (!event.getMessage().equals(fix)) {
 			if (ruFix.ruFixDebug)
 	        	System.out.print("[ruFixDebug]:" + event.getMessage() + ":");
@@ -31,7 +30,7 @@ public class ruFixPlayerListener implements Listener{
 	public void onPlayerChat(PlayerChatEvent event){
 		if (ruFix.ruFixDebug)
         	System.out.print("[ruFixDebug]:" + event.getMessage() + ":");
-		event.setMessage(fixUseTable(event.getMessage()));
+		event.setMessage(ruFix.fixUseTable(event.getMessage()));
 //		event.setMessage(fixFromGame(event.getMessage()));
 	}
 
@@ -46,21 +45,6 @@ public class ruFixPlayerListener implements Listener{
 		return msg;
 	}
 */
-
-	public String fixUseTable(String msg){
-		for (int n = 0; n < msg.length(); n++) {
-			char t = msg.charAt(n);
-//System.out.println("char: " + t);
-//System.out.println("int: " + (int)t);
-			int idx = Arrays.binarySearch(ruFix.fromGame, t);
-//System.out.println("idx: " + idx);
-			if (idx > -1){
-				msg = msg.replace(t, ruFix.toGame[idx]);
-//System.out.println("charf: " + ruFix.toGame[idx]);
-			}
-		}
-		return msg;
-	}
 
 /*	
 	public String fixFromGame(String original_message){
