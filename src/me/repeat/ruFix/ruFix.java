@@ -103,7 +103,7 @@ public class ruFix extends JavaPlugin {
 	}
     
     private void createNewConfig() {
-    	configFile = new File(directory,"config_new.yml");
+    	configFile = new File(directory,"config.yml");
         config = YamlConfiguration.loadConfiguration(configFile);
         
         String[] listOfTables = {"ru"};
