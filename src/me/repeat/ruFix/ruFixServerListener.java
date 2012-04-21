@@ -14,10 +14,10 @@ public class ruFixServerListener implements Listener{
     public void onServerCommand(ServerCommandEvent event) {
 		if (ruFix.parseConsole) {
 				
-	    	//byte[] message = event.getCommand().getBytes();
-			String text = ruFix.fixUseTable(event.getCommand());
-			
-	         /* for (int n = 0; n < message.length; n++) {
+	    	byte[] message = event.getCommand().getBytes();
+			//String text = ruFix.fixUseTable(event.getCommand());
+	    	String text = "";
+	          for (int n = 0; n < message.length; n++) {
 	
 	            int c = (int)message[n] & 0xFF;
 	            int c1 = 0;
@@ -45,7 +45,7 @@ public class ruFixServerListener implements Listener{
 	            } else {
 	            	text += (char)c;
 	            }
-	        } */
+	        }
 	        if (ruFix.ruFixDebug && event.getCommand().length() > 0 )
 	        	System.out.print("[ruFixDebug]: " + event.getCommand() + ":" );
 			event.setCommand(text);
@@ -54,8 +54,6 @@ public class ruFixServerListener implements Listener{
 			// this correction have effect when press Enter without any command
 			if (event.getCommand().length() == 0)
 				event.setCommand("/");
-	    } else {
-	    	// do nothing, because russians are lazy.
 	    }
 	}
 }

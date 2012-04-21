@@ -2,7 +2,6 @@ package me.repeat.ruFix;
 
 import java.io.*;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.*;
@@ -68,10 +67,6 @@ public class ruFix extends JavaPlugin {
 		
 		pm.registerEvents(PlayerListener, this);
 		pm.registerEvents(ServerListener, this);
-		// ниже - старые ивенты. Я не знаю зачем они тут, просто чтоб не потерялись.
-		//pm.registerEvent(Event.Type.PLAYER_CHAT, PlayerListener, Event.Priority.Lowest, this);
-		//pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS, PlayerListener, Event.Priority.Lowest, this);
-		//pm.registerEvent(Event.Type.SERVER_COMMAND, ServerListener, Event.Priority.Lowest, this);
 
 		readTables();
 	}
@@ -107,6 +102,33 @@ public class ruFix extends JavaPlugin {
 	     }
 	}
     
+    private void createNewConfig() {
+    	configFile = new File(directory,"config_new.yml");
+        config = YamlConfiguration.loadConfiguration(configFile);
+        
+        String[] listOfTables = {"ru"};
+        config.set("Tables", Arrays.asList(listOfTables));
+        config.set("Debug", false);
+        config.set("LogFile", "UTF-8");
+        config.set("Console", "UTF-8");
+        config.set("ParseConsole", true);
+        config.set("ParseLogFile", true);
+        
+        String osName = System.getProperty("os.name");
+        if (osName.startsWith("Win")) {
+			config.set("Console", "CP866");
+        } else if (osName.startsWith("Linux")) {
+        	config.set("Console", "UTF-8");
+        	config.set("ParseConsole", false);
+        }
+        
+        try {
+    		config.save(configFile);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+    
     private void placeFiles() {
 
         boolean configExists = false;
@@ -123,32 +145,22 @@ public class ruFix extends JavaPlugin {
         	directory.mkdir();
         }
         
+        if (!configExists) {
+        	Logger.getLogger("Minecraft").info(prefix+": WRITING DEFAULT CONFIG");
+        	createNewConfig();
+        }
         
-        if (!configExists | !langTableExists) {
-            for (int x = 0; x <= 1; x++) {
+        if (!langTableExists) {
                 boolean writeFile = true;
-                
                 try {
                     InputStream defaultStream = null;
                     File conf = null;
-                    
-                    switch (x) {
-                    case 0:
-                    	System.out.print("[ruFix]: WRITING DEFAULT CONFIG");
-                        defaultStream = this.getClass().getResourceAsStream("/config.yml");
-                        conf = new File(directory + File.separator +"config.yml");
-                        if (configExists)
-                            writeFile = false;
-                        break;
-                    case 1:
-                    	System.out.print("[ruFix]: WRITING DEFAULT LANGUAGE TABLE (RU)");
-                        defaultStream = this.getClass().getResourceAsStream("/ru.tbl");
-                        conf = new File(directory + File.separator +"ru.tbl");
-                        if (langTableExists)
-                            writeFile = false;
-                        break;
-                    }
-                    
+
+                	Logger.getLogger("Minecraft").info(prefix+ ": WRITING DEFAULT LANGUAGE TABLE (RU)");
+                    defaultStream = this.getClass().getResourceAsStream("/ru.tbl");
+                    conf = new File(directory + File.separator +"ru.tbl");
+                    if (langTableExists) writeFile = false;
+
                     if (writeFile) {
                         directory.mkdir();
                         conf.createNewFile();
@@ -173,7 +185,7 @@ public class ruFix extends JavaPlugin {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+            
         }
     }
 	
@@ -183,11 +195,6 @@ public class ruFix extends JavaPlugin {
     	File configFile = new File(directory, "config.yml");
     	
     	config = YamlConfiguration.loadConfiguration(configFile);
-    	
-    	List<String> tables = new ArrayList<String>();
-   	 
-    	tables.add("ru");
-//    	tables.add("gr");
     	
     	saveConfig();
 
