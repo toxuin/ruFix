@@ -1,6 +1,6 @@
 package me.repeat.ruFix;
 
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,7 +27,7 @@ public class ruFixPlayerListener implements Listener{
 } 
 	
 	@EventHandler(priority = EventPriority.LOW)
-	public void onPlayerChat(PlayerChatEvent event){
+	public void onPlayerChat(AsyncPlayerChatEvent event){
 		if (ruFix.ruFixDebug)
         	System.out.print("[ruFixDebug]:" + event.getMessage() + ":");
 		event.setMessage(ruFix.fixUseTable(event.getMessage()));
